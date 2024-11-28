@@ -4,6 +4,7 @@ package edu.farmingdale.draganddropanim_demo
 
 import android.content.ClipData
 import android.content.ClipDescription
+import androidx.compose.animation.Animatable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -38,6 +39,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Icon
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -111,6 +113,14 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
                     }
                 }
             }
+        }
+
+        var rtat = remember { androidx.compose.animation.core.Animatable(0f) }
+
+        LaunchedEffect(key1 = rtat) {
+            rtat.animateTo(
+                targetValue = 720f
+            )
         }
 
 
