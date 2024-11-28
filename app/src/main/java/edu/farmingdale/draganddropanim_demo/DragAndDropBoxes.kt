@@ -6,6 +6,8 @@ import android.content.ClipData
 import android.content.ClipDescription
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
@@ -43,6 +45,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -115,14 +118,17 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
             }
         }
 
-        var rtat = remember { androidx.compose.animation.core.Animatable(0f) }
+        // Rotation Animation State
+        val rotation = remember { Animatable(0f) }
 
-        LaunchedEffect(key1 = rtat) {
-            rtat.animateTo(
-                targetValue = 720f
+        // Launch rotation animation
+        LaunchedEffect(Unit) {
+            rotation.animateTo(
+                targetValue = 360f, // Rotate twice fully
+                animationSpec = tween(durationMillis = 2000) // 5-second animation
             )
+           // rotation.snapTo(0f)
         }
-
 
         Canvas(
             modifier = Modifier
@@ -131,9 +137,11 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
                 .background(Color.Red)
 
         ) {
-                //drawCircle(Color.Green, radius = 50f, center = Offset(100f, 100f))
-                drawRect(Color.Blue, topLeft = Offset(200f, 200f),size = Size(200f, 200f))
-       }
+            //drawCircle(Color.Green, radius = 50f, center = Offset(100f, 100f))
+            rotate(degrees = rotation.value, pivot = Offset(900f, 400f)) {
+                drawRect(Color.Blue, topLeft = Offset(900f, 400f), size = Size(200f, 200f))
+            }
+        }
     }
 }
 
