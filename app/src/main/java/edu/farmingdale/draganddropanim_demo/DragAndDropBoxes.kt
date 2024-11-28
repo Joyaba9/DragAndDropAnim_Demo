@@ -40,8 +40,10 @@ import androidx.compose.ui.draganddrop.mimeTypes
 import androidx.compose.foundation.Canvas
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -130,6 +132,16 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
            // rotation.snapTo(0f)
         }
 
+        var offsetX by remember { mutableStateOf(0f) }
+        var offsetY by remember { mutableStateOf(0f) }
+
+        Button(onClick = {
+            offsetX = 0f
+            offsetY = 0f
+        }) {
+            Text(text = "Reset Position")
+        }
+
         Canvas(
             modifier = Modifier
                 .fillMaxWidth()
@@ -142,6 +154,7 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
                 drawRect(Color.Blue, topLeft = Offset(900f, 400f), size = Size(200f, 200f))
             }
         }
+
     }
 }
 
